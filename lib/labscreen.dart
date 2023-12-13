@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,9 @@ class LabScreen extends StatefulWidget {
 
 class _LabScreenState extends State<LabScreen> {
   String? _selectedImagePath;
+  List<XFile>? imageFileList = [];
+  final ImagePicker imagePicker = ImagePicker();
+
   Future<void> _pickImage() async {
     final picker = ImagePicker();
 
@@ -91,20 +95,30 @@ class _LabScreenState extends State<LabScreen> {
     );
   }
 
+  void selectImages() async {
+    final List<XFile> selectedImages = await imagePicker.pickMultiImage();
+    if (selectedImages.isNotEmpty) {
+      imageFileList!.addAll(selectedImages);
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 145, 182, 216),
+        backgroundColor: const Color.fromARGB(255, 145, 182, 216),
         appBar: AppBar(
           elevation: 5,
           backgroundColor: Colors.blue,
-          title: Text(
+          title: const Text(
             'Logo name',
             style: TextStyle(color: Colors.white),
           ),
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 10),
+          leading: const Padding(
+            padding: EdgeInsets.only(left: 10),
             child: CircleAvatar(
               backgroundColor: Colors.white,
               maxRadius: 30,
@@ -119,7 +133,8 @@ class _LabScreenState extends State<LabScreen> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  _pickImage();
+                  // _pickImage();
+                  selectImages();
                 },
                 child: const Text('Upload Image'),
               ),
@@ -146,31 +161,89 @@ class _LabScreenState extends State<LabScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ElevatedButton(
-                          style: ButtonStyle(
+                          style: const ButtonStyle(
                               backgroundColor:
                                   MaterialStatePropertyAll(Colors.purple)),
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             'Lap Analysis',
                             style: TextStyle(color: Colors.white),
                           )),
                     ],
                   ),
+                  const SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       ElevatedButton(
-                          style: ButtonStyle(
+                          style: const ButtonStyle(
                               backgroundColor:
                                   MaterialStatePropertyAll(Colors.purple)),
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             'Lap Recomedations',
                             style: TextStyle(color: Colors.white),
                           )),
                     ],
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            InkWell(
+              // onTap: () => selectImages(),
+              child: SizedBox(
+                child: InkWell(
+                  // onTap: () => selectImages(),
+                  child: Container(
+                    height:
+                        max(size.height / 2, ((20.0) * imageFileList!.length)),
+                    width: size.width,
+                    color: Colors.grey,
+
+                    child: imageFileList == null
+                        ? const Column(
+                            children: [
+                              Icon(
+                                Icons.add_a_photo,
+                                color: Colors.grey,
+                              ),
+                              Text('Please add photo more the one')
+                            ],
+                          )
+                        : imageFileList!.length > 1 || imageFileList == null
+                            ? GridView.builder(
+                                shrinkWrap: true,
+                                itemCount: imageFileList!.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3),
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.file(
+                                        File(imageFileList![index].path),
+                                        fit: BoxFit.cover),
+                                  );
+                                })
+                            : null,
+
+                    // child: Center(
+                    //     child: _image == null
+                    //         ? Icon(
+                    //             Icons.add_a_photo_outlined,
+                    //             color: Colors.grey,
+                    //           )
+                    //         : Image.file(
+                    //             _image!,
+                    //             fit: BoxFit.fitWidth,
+                    //           )),
+                  ),
+                ),
               ),
             ),
 
@@ -182,13 +255,14 @@ class _LabScreenState extends State<LabScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(onPressed: () {}, child: Text('Back')),
                       ElevatedButton(
-                          style: ButtonStyle(
+                          onPressed: () {}, child: const Text('Back')),
+                      ElevatedButton(
+                          style: const ButtonStyle(
                               backgroundColor:
                                   MaterialStatePropertyAll(Colors.amber)),
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             'LogOut',
                           )),
                     ],
