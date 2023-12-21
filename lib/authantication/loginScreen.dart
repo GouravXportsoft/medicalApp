@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/constants/colors_const.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: size.width,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: Colors.blueAccent,
+                          color: baseColor,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(35),
                             topLeft: Radius.circular(35),
