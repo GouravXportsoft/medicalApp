@@ -1,0 +1,11 @@
+const String labText = "Laboratory";
+const String medicineText = "Medicine";
+const String serviceText = "Services";
+const String doctorText = "Doctor";
+const String optionText = "Option 1";
+const String option2Text = "Option 2";
+const String backText = "Back";
+const String logOutText = "Logout";
+const String uploadText = "Upload/Open Camera";
+const String labAnalysisText = "Lab Analysis";
+const String labRecomedText = "Lab Recommendations";
