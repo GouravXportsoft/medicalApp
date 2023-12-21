@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medical_app/constant/colorconst.dart';
-import 'package:medical_app/constant/imageConst.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -18,10 +16,6 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.white,
         body: Column(
           children: [
-            Image.asset(
-              TempLogo,
-              scale: 5,
-            ),
             Expanded(
               child: Stack(
                 children: [
@@ -32,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: size.width,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: baseColor,
+                          color: Colors.blueAccent,
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(35),
                             topLeft: Radius.circular(35),
