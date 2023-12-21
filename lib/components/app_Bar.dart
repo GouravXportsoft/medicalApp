@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/constants/colors_const.dart';
 
 class CustomeAppBar extends StatelessWidget {
   const CustomeAppBar({super.key});
@@ -8,14 +9,15 @@ class CustomeAppBar extends StatelessWidget {
     return SafeArea(
       child: Container(
         height: 70,
-        color: Colors.white,
+        decoration:
+            const BoxDecoration(color: Colors.white, boxShadow: <BoxShadow>[]),
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 backgroundImage: AssetImage('assets/user.png'),
               ),
               Image.asset(
@@ -26,7 +28,7 @@ class CustomeAppBar extends StatelessWidget {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: darkGreenColor,
                     borderRadius: BorderRadius.circular(6)),
                 child: IconButton(
                     onPressed: () {},
