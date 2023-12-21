@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class LabScreen extends StatefulWidget {
+class LabScreen extends StatefulWidget {     
   const LabScreen({super.key});
 
   @override
@@ -20,8 +20,6 @@ class _LabScreenState extends State<LabScreen> {
   Future<void> _pickImage() async {
     final picker = ImagePicker();
 
-    // Show a dialog or use any other method to let the user choose between camera and gallery
-    // For simplicity, I'm using a hypothetical method _showImageSourceDialog.
     String? chosenSource = await _showImageSourceDialog();
 
     if (chosenSource == 'camera') {
