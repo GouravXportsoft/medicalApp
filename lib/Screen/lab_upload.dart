@@ -186,7 +186,7 @@ class _LabUploadState extends State<LabUpload> {
                           height: 50,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                              color: const Color(0xff7B9B41),
+                              color: const Color(0xff3273DA),
                               borderRadius: BorderRadius.circular(8)),
                           child: const Center(
                             child: Text(

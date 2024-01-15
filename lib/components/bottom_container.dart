@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:medical_app/constants/colors_const.dart';
 import 'package:medical_app/constants/string_const.dart';
 
-class BottomContainer extends StatelessWidget {
+class BottomContainer extends StatefulWidget {
   const BottomContainer({super.key});
 
+  @override
+  State<BottomContainer> createState() => _BottomContainerState();
+}
+
+class _BottomContainerState extends State<BottomContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +22,11 @@ class BottomContainer extends StatelessWidget {
             height: 50,
             width: 150,
             decoration: BoxDecoration(
-                color: darkGreenColor, borderRadius: BorderRadius.circular(6)),
+                gradient: LinearGradient(
+                    colors: [Color(0xff55BE00), Color(0xff3171DD)],
+                    end: Alignment.bottomRight,
+                    begin: Alignment.topLeft),
+                borderRadius: BorderRadius.circular(6)),
             child: const Center(
               child: Text(
                 backText,
