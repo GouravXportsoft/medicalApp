@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/Screen/admin/admin_screen.dart';
 import 'package:medical_app/components/app_Bar.dart';
 import 'package:medical_app/components/bottom_container.dart';
 import 'package:medical_app/constants/colors_const.dart';
@@ -8,7 +9,7 @@ import 'package:medical_app/constants/string_const.dart';
 class MedicineScreen extends StatelessWidget {
   MedicineScreen({super.key});
 
-  final List listImages = [
+  final List gridImages = [
     labImg,
     medicineImg,
     serviceImg,
@@ -16,7 +17,7 @@ class MedicineScreen extends StatelessWidget {
     optionalImg,
     optionalImg
   ];
-  final List listImagesText = [
+  final List gridImagesText = [
     labText,
     medicineText,
     serviceText,
@@ -41,122 +42,117 @@ class MedicineScreen extends StatelessWidget {
                   color: bgImageColor,
                 ),
               ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 27),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 50,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: lightGreenColor,
-                              borderRadius: BorderRadius.circular(8)),
-                          child: const Center(
-                            child: Text(
-                              'Medicine Name/Upload Prescription',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500),
-                            ),
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 27),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 15,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Text(
-                          'OR',
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 36,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                            height: 100,
+                          Container(
+                            height: 50,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                                color: const Color.fromARGB(255, 255, 247, 233),
+                                color: lightGreenColor,
                                 borderRadius: BorderRadius.circular(8)),
-                            child: const Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: TextField(
-                                maxLines: 4,
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Write your prescription here',
-                                    hintStyle: TextStyle(
-                                        fontSize: 14, color: Colors.grey)),
+                            child: const Center(
+                              child: Text(
+                                'Medicine Name/Upload Prescription',
+                                style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
                               ),
-                            )),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 27),
-                      child: ListView.builder(
-                          itemCount: listImages.length,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    height: size.height / 3,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: const Color(0xff7B9B41)),
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          listImages[index],
-                                          scale: 2,
-                                          color: const Color(0xff7B9B41),
-                                        ),
-                                        const SizedBox(
-                                          height: 6,
-                                        ),
-                                        Center(
-                                          child: Text(
-                                            listImagesText[index],
-                                            style: const TextStyle(
-                                                color: Color(0xff7B9B41),
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.w700),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                            ),
+                          ),
+                          const Text(
+                            'OR',
+                            style: const TextStyle(
+                                color: textColor,
+                                fontSize: 36,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Container(
+                              height: 100,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 255, 247, 233),
+                                  borderRadius: BorderRadius.circular(8)),
+                              child: const Padding(
+                                padding: EdgeInsets.only(left: 10),
+                                child: TextField(
+                                  maxLines: 4,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: 'Write your prescription here',
+                                      hintStyle: TextStyle(
+                                          fontSize: 14, color: Colors.grey)),
                                 ),
-                              ],
-                            );
-                          }),
+                              )),
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: size.height * .18,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: size.height * .1),
-                    child: const BottomContainer(),
-                  )
-                ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 27),
+                      child: GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: gridImages.length,
+                          shrinkWrap: true,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  childAspectRatio: 18 / 9,
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 15,
+                                  crossAxisSpacing: 15),
+                          itemBuilder: ((context, index) {
+                            return InkWell(
+                              onTap: () {
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => AdminScreen()));
+                              },
+                              child: Container(
+                                height: 30,
+                                width: 30,
+                                decoration: BoxDecoration(
+                                    color: Colors.transparent,
+                                    border: Border.all(color: gridTextColor),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      gridImages[index],
+                                      scale: 2,
+                                      color: gridTextColor,
+                                    ),
+                                    const SizedBox(
+                                      height: 7,
+                                    ),
+                                    Text(
+                                      gridImagesText[index],
+                                      style: const TextStyle(
+                                          color: gridTextColor,
+                                          fontWeight: FontWeight.w700),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          })),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               ),
             ]),
-          )
+          ),
+          const BottomContainer()
         ],
       ),
     );

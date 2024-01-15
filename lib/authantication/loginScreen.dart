@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/Screen/home_screen.dart';
 import 'package:medical_app/authantication/OtpScreen.dart';
 import 'package:medical_app/authantication/RegisterationScreen.dart';
 import 'package:medical_app/constants/colors_const.dart';
@@ -36,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-                height: size.height,
+                height: size.height * .8,
                 decoration: const BoxDecoration(
                   color: baseColor,
                   image: DecorationImage(
@@ -174,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OtpScreen()));
+                                  builder: (context) => HomeScreen()));
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -186,7 +187,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(12)),
                             child: const Center(
                               child: Text(
-                                "Login",
+                                "LOGIN",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 13,
@@ -197,8 +198,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {},
-                        child: Text(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const OtpScreen()));
+                        },
+                        child: const Text(
                           "Forgot Password?",
                           style: TextStyle(
                               color: authscreenTextcolor,
@@ -209,21 +215,32 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 40),
                         child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => RegisterScreen()));
-                          },
-                          child: Text(
-                            "Don’t have account? Sign up",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: authscreenTextcolor),
-                          ),
-                        ),
-                      )
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterScreen()));
+                            },
+                            child: RichText(
+                                text: const TextSpan(children: [
+                              TextSpan(
+                                text: 'Don’t have account? ',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    color: authscreenTextcolor),
+                              ),
+                              TextSpan(
+                                text: ' Sign up',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    color: authscreenTextcolor),
+                              )
+                            ]))),
+                      ),
                     ],
                   ),
                 ),

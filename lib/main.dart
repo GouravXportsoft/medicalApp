@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medical_app/Screen/home_screen.dart';
+import 'package:medical_app/authantication/loginScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

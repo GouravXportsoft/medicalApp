@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/authantication/loginScreen.dart';
 import 'package:medical_app/constants/colors_const.dart';
 import 'package:medical_app/constants/image_const.dart';
 
@@ -345,7 +346,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         onTap: () {},
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 40.0),
+                              horizontal: 16.0, vertical: 20.0),
                           child: Container(
                             height: 50,
                             decoration: BoxDecoration(
@@ -364,22 +365,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()));
-                        },
-                        child: Text(
-                          "Don’t have account? Sign up",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500,
-                              color: authscreenTextcolor),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 100,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
+                          },
+                          child: RichText(
+                              text: const TextSpan(children: [
+                            TextSpan(
+                              text: 'Already have an account? ',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: authscreenTextcolor),
+                            ),
+                            TextSpan(
+                              text: ' Sign In',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: authscreenTextcolor),
+                            )
+                          ]))),
+                      const SizedBox(
+                        height: 150,
                       )
                     ],
                   ),

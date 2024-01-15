@@ -223,7 +223,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           child: const Center(
                             child: Text(
-                              "Submit",
+                              "SUBMIT",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
