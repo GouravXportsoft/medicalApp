@@ -18,22 +18,27 @@ class _BottomContainerState extends State<BottomContainer> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Container(
-            height: 50,
-            width: 150,
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [Color(0xff55BE00), Color(0xff3171DD)],
-                    end: Alignment.bottomRight,
-                    begin: Alignment.topLeft),
-                borderRadius: BorderRadius.circular(6)),
-            child: const Center(
-              child: Text(
-                backText,
-                style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                    color: Colors.white),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 50,
+              width: 150,
+              decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                      colors: [Color(0xff55BE00), Color(0xff3171DD)],
+                      end: Alignment.bottomRight,
+                      begin: Alignment.topLeft),
+                  borderRadius: BorderRadius.circular(6)),
+              child: const Center(
+                child: Text(
+                  backText,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                      color: Colors.white),
+                ),
               ),
             ),
           ),

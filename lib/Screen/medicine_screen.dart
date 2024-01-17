@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:medical_app/Screen/admin/admin_screen.dart';
 import 'package:medical_app/components/app_Bar.dart';
 import 'package:medical_app/components/bottom_container.dart';
@@ -6,9 +9,14 @@ import 'package:medical_app/constants/colors_const.dart';
 import 'package:medical_app/constants/image_const.dart';
 import 'package:medical_app/constants/string_const.dart';
 
-class MedicineScreen extends StatelessWidget {
+class MedicineScreen extends StatefulWidget {
   MedicineScreen({super.key});
 
+  @override
+  State<MedicineScreen> createState() => _MedicineScreenState();
+}
+
+class _MedicineScreenState extends State<MedicineScreen> {
   final List gridImages = [
     labImg,
     medicineImg,
@@ -17,6 +25,7 @@ class MedicineScreen extends StatelessWidget {
     optionalImg,
     optionalImg
   ];
+
   final List gridImagesText = [
     labText,
     medicineText,
@@ -25,6 +34,79 @@ class MedicineScreen extends StatelessWidget {
     optionText,
     option2Text
   ];
+
+  Future<void> _showImageSourceDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Select Image Source"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _pickImage(ImageSource.gallery);
+              },
+              child: const Text("Gallery"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _pickImage(ImageSource.camera);
+              },
+              child: const Text("Camera"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: source);
+
+    if (image != null) {
+      // Do something with the selected/captured image
+      print("Image path: ${image.path}");
+    } else {
+      // User canceled the image picking/capturing
+      print("Image picking/capturing canceled");
+    }
+  }
+
+  File? _pickedImage;
+
+  Future<void> _pickImageFromGallery() async {
+    final ImagePicker _picker = ImagePicker();
+
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      setState(() {
+        _pickedImage = File(image.path);
+      });
+      print("Image path: ${image.path}");
+    } else {
+      // User canceled the image picking
+      print("Image picking canceled");
+    }
+  }
+
+  Future<void> _captureImage() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+
+    if (image != null) {
+      setState(() {
+        _pickedImage = File(image.path);
+      });
+      print("Image path: ${image.path}");
+    } else {
+      // User canceled the image capturing
+      print("Image capturing canceled");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,85 +124,117 @@ class MedicineScreen extends StatelessWidget {
                   color: bgImageColor,
                 ),
               ),
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 27),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Container(
-                            height: 50,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: lightGreenColor,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: const Center(
-                              child: Text(
-                                'Medicine Name/Upload Prescription',
-                                style: TextStyle(
+              Column(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 27),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 15,
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  _showImageSourceDialog(context);
+                                },
+                                child: Container(
+                                  height: 100,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 255, 247, 233),
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: _pickedImage != null
+                                      ? Image.file(_pickedImage!)
+                                      : const Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Icon(
+                                                Icons.add,
+                                                color: Color(0xff439488),
+                                                size: 40,
+                                              ),
+                                              Text(
+                                                'Medicine Name/Upload Prescription',
+                                                style: TextStyle(
+                                                    color: Color(0xff439488),
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ]),
+                                ),
+                              ),
+                              const Text(
+                                'OR',
+                                style: const TextStyle(
                                     color: textColor,
-                                    fontSize: 16,
+                                    fontSize: 36,
                                     fontWeight: FontWeight.w500),
                               ),
-                            ),
+                              Container(
+                                  height: 100,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 255, 247, 233),
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(left: 10),
+                                    child: TextField(
+                                      maxLines: 4,
+                                      decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText:
+                                              'Write your prescription here',
+                                          hintStyle: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey)),
+                                    ),
+                                  )),
+                            ],
                           ),
-                          const Text(
-                            'OR',
-                            style: const TextStyle(
-                                color: textColor,
-                                fontSize: 36,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Container(
-                              height: 100,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 255, 247, 233),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: const Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: TextField(
-                                  maxLines: 4,
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Write your prescription here',
-                                      hintStyle: TextStyle(
-                                          fontSize: 14, color: Colors.grey)),
-                                ),
-                              )),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 27),
-                      child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: gridImages.length,
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 18 / 9,
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 15,
-                                  crossAxisSpacing: 15),
-                          itemBuilder: ((context, index) {
-                            return InkWell(
-                              onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => AdminScreen()));
-                              },
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: ListView.builder(
+                        itemCount: gridImages.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: ((context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MedicineScreen()));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 height: 30,
-                                width: 30,
+                                width: size.width / 4,
                                 decoration: BoxDecoration(
-                                    color: Colors.transparent,
+                                    gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xff55BE00),
+                                          Color(0xff3171DD)
+                                        ],
+                                        end: Alignment.bottomRight,
+                                        begin: Alignment.topLeft),
                                     border: Border.all(color: gridTextColor),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Column(
@@ -128,8 +242,8 @@ class MedicineScreen extends StatelessWidget {
                                   children: [
                                     Image.asset(
                                       gridImages[index],
-                                      scale: 2,
-                                      color: gridTextColor,
+                                      scale: 3,
+                                      color: whiteColor,
                                     ),
                                     const SizedBox(
                                       height: 7,
@@ -137,18 +251,22 @@ class MedicineScreen extends StatelessWidget {
                                     Text(
                                       gridImagesText[index],
                                       style: const TextStyle(
-                                          color: gridTextColor,
+                                          color: whiteColor,
                                           fontWeight: FontWeight.w700),
                                     )
                                   ],
                                 ),
                               ),
-                            );
-                          })),
+                            ),
+                          );
+                        }),
+                      ),
                     ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: size.height * .2,
+                  )
+                ],
               ),
             ]),
           ),

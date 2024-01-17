@@ -9,4 +9,5 @@ const Color darkGreenColor = Color(0xff007B01);
 const Color gridTextColor = Color(0xFF7B9B41);
 const Color whiteColor = Colors.white;
 const Color textColor = Color(0xFF264653);
+const Color blueColor = Color(0xFF267CFF);
 const Color bgImageColor = Color.fromARGB(255, 120, 169, 165);

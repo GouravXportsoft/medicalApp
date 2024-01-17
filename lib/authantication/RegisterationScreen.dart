@@ -25,17 +25,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset(
-                  logoImg,
-                  scale: 15,
+              Container(
+                height: 110,
+                width: size.width * .28,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(color: Colors.black38, blurRadius: 2)
+                    ],
+                    color: whiteColor,
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(53),
+                        bottomRight: Radius.circular(53))),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20, bottom: 3),
+                  child: SizedBox(
+                    child: Image.asset(
+                      logoImg,
+                      // scale: 1.75,
+                    ),
+                  ),
                 ),
               ),
+              SizedBox(
+                height: size.height * .15,
+              ),
               Container(
-                height: size.height,
-                decoration: const BoxDecoration(
-                  color: baseColor,
+                height: size.height * .66,
+                decoration: BoxDecoration(
+                  border: Border.all(color: blueColor, width: 2),
+                  color: whiteColor,
                   image: DecorationImage(
                     image: AssetImage(
                       bgImg,
@@ -71,298 +89,314 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 16),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Username",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: authscreenTextcolor),
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: TextFormField(
-                                  controller: emailController,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Select Username',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xff747474),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400),
-                                    suffixIcon: Icon(
-                                      Icons.person_outline,
-                                      color: Color(0xff747474),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 16.0),
-                                  ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your email';
-                                    }
-                                    return null;
-                                  },
+                      Column(
+                        children: [
+                          Form(
+                            key: _formKey,
+                            child: Column(
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 16),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Username",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: authscreenTextcolor),
+                                      )),
                                 ),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 16.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Password",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: authscreenTextcolor),
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: TextFormField(
-                                  controller: passController,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Password',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xff747474),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400),
-                                    suffixIcon: Icon(
-                                      Icons.lock,
-                                      color: Color(0xff747474),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 10.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: TextFormField(
+                                      controller: emailController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Select Username',
+                                        hintStyle: TextStyle(
+                                            color: Color(0xff747474),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400),
+                                        suffixIcon: Icon(
+                                          Icons.person_outline,
+                                          color: Color(0xff747474),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 12.0, horizontal: 16.0),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your email';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 16.0),
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your password';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 16.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Email id",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: authscreenTextcolor),
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: TextFormField(
-                                  controller: passController,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Your email id...',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xff747474),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400),
-                                    suffixIcon: Icon(
-                                      Icons.mail_outlined,
-                                      color: Color(0xff747474),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Password",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: authscreenTextcolor),
+                                      )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 10.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: TextFormField(
+                                      controller: passController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Password',
+                                        hintStyle: TextStyle(
+                                            color: Color(0xff747474),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400),
+                                        suffixIcon: Icon(
+                                          Icons.lock,
+                                          color: Color(0xff747474),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 12.0, horizontal: 16.0),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your password';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 16.0),
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your password';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 16.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Mobile Number",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: authscreenTextcolor),
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: TextFormField(
-                                  controller: passController,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Enter Mobile Number',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xff747474),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400),
-                                    suffixIcon: Icon(
-                                      Icons.mobile_screen_share,
-                                      color: Color(0xff747474),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Email id",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: authscreenTextcolor),
+                                      )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 10.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: TextFormField(
+                                      controller: passController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Your email id...',
+                                        hintStyle: TextStyle(
+                                            color: Color(0xff747474),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400),
+                                        suffixIcon: Icon(
+                                          Icons.mail_outlined,
+                                          color: Color(0xff747474),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 12.0, horizontal: 16.0),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your password';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 16.0),
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your password';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 16.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Name",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: authscreenTextcolor),
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: TextFormField(
-                                  controller: passController,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Eenter Your Name',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xff747474),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400),
-                                    suffixIcon: Icon(
-                                      Icons.person_outline,
-                                      color: Color(0xff747474),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Mobile Number",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: authscreenTextcolor),
+                                      )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 10.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: TextFormField(
+                                      controller: passController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Enter Mobile Number',
+                                        hintStyle: TextStyle(
+                                            color: Color(0xff747474),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400),
+                                        suffixIcon: Icon(
+                                          Icons.mobile_screen_share,
+                                          color: Color(0xff747474),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 12.0, horizontal: 16.0),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your password';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 16.0),
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your password';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 16.0),
-                              child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "DOB",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                        color: authscreenTextcolor),
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 10.0),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: TextFormField(
-                                  controller: passController,
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: 'Enter Your DOB',
-                                    hintStyle: TextStyle(
-                                        color: Color(0xff747474),
-                                        fontSize: 13,
-                                        fontWeight: FontWeight.w400),
-                                    suffixIcon: Icon(
-                                      Icons.calendar_month,
-                                      color: Color(0xff747474),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "Name",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: authscreenTextcolor),
+                                      )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 10.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: TextFormField(
+                                      controller: passController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Eenter Your Name',
+                                        hintStyle: TextStyle(
+                                            color: Color(0xff747474),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400),
+                                        suffixIcon: Icon(
+                                          Icons.person_outline,
+                                          color: Color(0xff747474),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 12.0, horizontal: 16.0),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your password';
+                                        }
+                                        return null;
+                                      },
                                     ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 16.0),
                                   ),
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Please enter your password';
-                                    }
-                                    return null;
-                                  },
                                 ),
-                              ),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "DOB",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: authscreenTextcolor),
+                                      )),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0, vertical: 10.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
+                                    child: TextFormField(
+                                      controller: passController,
+                                      decoration: const InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        hintText: 'Enter Your DOB',
+                                        hintStyle: TextStyle(
+                                            color: Color(0xff747474),
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400),
+                                        suffixIcon: Icon(
+                                          Icons.calendar_month,
+                                          color: Color(0xff747474),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 12.0, horizontal: 16.0),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter your password';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 20.0),
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: authButtoncolor,
-                                borderRadius: BorderRadius.circular(12)),
-                            child: const Center(
-                              child: Text(
-                                "REGISTER",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w700),
+                          ),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 20.0),
+                              child: Container(
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xff55BE00),
+                                          Color(0xff3171DD)
+                                        ],
+                                        end: Alignment.bottomRight,
+                                        begin: Alignment.topLeft),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: const Center(
+                                  child: Text(
+                                    "REGISTER",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
                       GestureDetector(
                           onTap: () {

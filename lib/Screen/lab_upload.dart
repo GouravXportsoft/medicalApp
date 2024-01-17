@@ -123,115 +123,125 @@ class _LabUploadState extends State<LabUpload> {
                   color: bgImageColor,
                 ),
               ),
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 27),
-                      child: Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              _showImageSourceDialog(context);
-                            },
-                            child: Container(
-                              height: 100,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 255, 247, 233),
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: _pickedImage != null
-                                  ? Image.file(_pickedImage!)
-                                  : const Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                          SizedBox(
-                                            height: 20,
-                                          ),
-                                          Icon(
-                                            Icons.add,
-                                            color: Color(0xff439488),
-                                            size: 40,
-                                          ),
-                                          Text(
-                                            uploadText,
-                                            style: TextStyle(
+              Column(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 27),
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  _showImageSourceDialog(context);
+                                },
+                                child: Container(
+                                  height: 100,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 255, 247, 233),
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: _pickedImage != null
+                                      ? Image.file(_pickedImage!)
+                                      : const Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                              SizedBox(
+                                                height: 20,
+                                              ),
+                                              Icon(
+                                                Icons.add,
                                                 color: Color(0xff439488),
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ]),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 25,
-                          ),
-                          Container(
-                            height: 50,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: lightGreenColor,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: const Center(
-                              child: Text(
-                                labAnalysisText,
-                                style: TextStyle(
-                                    color: textColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500),
+                                                size: 40,
+                                              ),
+                                              Text(
+                                                uploadText,
+                                                style: TextStyle(
+                                                    color: Color(0xff439488),
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ]),
+                                ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            height: 50,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: const Color(0xff7B9B41),
-                                borderRadius: BorderRadius.circular(8)),
-                            child: const Center(
-                              child: Text(
-                                labRecomedText,
-                                style: TextStyle(
-                                    color: whiteColor,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500),
+                              const SizedBox(
+                                height: 25,
                               ),
-                            ),
+                              Container(
+                                height: 50,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xff55BC07),
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Center(
+                                  child: Text(
+                                    labAnalysisText,
+                                    style: TextStyle(
+                                        color: whiteColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                height: 50,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: blueColor,
+                                    borderRadius: BorderRadius.circular(8)),
+                                child: const Center(
+                                  child: Text(
+                                    labRecomedText,
+                                    style: TextStyle(
+                                        color: whiteColor,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 27),
-                      child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: gridImages.length,
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: 18 / 9,
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 15,
-                                  crossAxisSpacing: 15),
-                          itemBuilder: ((context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            MedicineScreen()));
-                              },
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: ListView.builder(
+                        itemCount: gridImages.length,
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemBuilder: ((context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MedicineScreen()));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 height: 30,
-                                width: 30,
+                                width: size.width / 4,
                                 decoration: BoxDecoration(
-                                    color: Colors.transparent,
+                                    gradient: const LinearGradient(
+                                        colors: [
+                                          Color(0xff55BE00),
+                                          Color(0xff3171DD)
+                                        ],
+                                        end: Alignment.bottomRight,
+                                        begin: Alignment.topLeft),
                                     border: Border.all(color: gridTextColor),
                                     borderRadius: BorderRadius.circular(8)),
                                 child: Column(
@@ -239,8 +249,8 @@ class _LabUploadState extends State<LabUpload> {
                                   children: [
                                     Image.asset(
                                       gridImages[index],
-                                      scale: 2,
-                                      color: gridTextColor,
+                                      scale: 3,
+                                      color: whiteColor,
                                     ),
                                     const SizedBox(
                                       height: 7,
@@ -248,18 +258,22 @@ class _LabUploadState extends State<LabUpload> {
                                     Text(
                                       gridImagesText[index],
                                       style: const TextStyle(
-                                          color: gridTextColor,
+                                          color: whiteColor,
                                           fontWeight: FontWeight.w700),
                                     )
                                   ],
                                 ),
                               ),
-                            );
-                          })),
+                            ),
+                          );
+                        }),
+                      ),
                     ),
-                    const SizedBox(height: 20),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: size.height * .25,
+                  )
+                ],
               ),
             ]),
           ),
