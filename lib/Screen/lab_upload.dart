@@ -231,10 +231,10 @@ class _LabUploadState extends State<LabUpload> {
                               setState(() {
                                 selectedIndex = index;
                               });
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => MedicineScreen()));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MedicineScreen()));
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -282,7 +282,7 @@ class _LabUploadState extends State<LabUpload> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * .25,
+                    height: size.height / 6,
                   )
                 ],
               ),

@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(10.0),
             child: const CustomeAppBar(),
           ),
           Expanded(
@@ -62,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                               shrinkWrap: true,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                      childAspectRatio: 14 / 9,
+                                      childAspectRatio: 14 / 8,
                                       crossAxisCount: 2,
                                       mainAxisSpacing: 15,
                                       crossAxisSpacing: 15),
@@ -75,8 +75,8 @@ class HomeScreen extends StatelessWidget {
                                             builder: (context) => LabUpload()));
                                   },
                                   child: Container(
-                                    height: 60,
-                                    width: 60,
+                                    height: 45,
+                                    width: 45,
                                     decoration: BoxDecoration(
                                         gradient: const LinearGradient(
                                             colors: [

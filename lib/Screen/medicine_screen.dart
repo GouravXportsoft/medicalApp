@@ -107,7 +107,7 @@ class _MedicineScreenState extends State<MedicineScreen> {
     }
   }
 
-  int selectedIndex = -1;
+  int selectedIndex = 0;
   List<Color> gradiantcontainerColor = [Color(0xff55BE00), Color(0xff3171DD)];
 
   @override
@@ -149,45 +149,43 @@ class _MedicineScreenState extends State<MedicineScreen> {
                                   height: 100,
                                   width: double.infinity,
                                   decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black38),
                                       color: const Color.fromARGB(
                                           255, 255, 247, 233),
                                       borderRadius: BorderRadius.circular(8)),
                                   child: _pickedImage != null
                                       ? Image.file(_pickedImage!)
-                                      : const Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                              SizedBox(
-                                                height: 20,
-                                              ),
-                                              Icon(
-                                                Icons.add,
+                                      : const Column(children: [
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          Icon(
+                                            Icons.add,
+                                            color: Color(0xff439488),
+                                            size: 25,
+                                          ),
+                                          Text(
+                                            'Medicine Name/Upload Prescription',
+                                            style: TextStyle(
                                                 color: Color(0xff439488),
-                                                size: 40,
-                                              ),
-                                              Text(
-                                                'Medicine Name/Upload Prescription',
-                                                style: TextStyle(
-                                                    color: Color(0xff439488),
-                                                    fontSize: 16,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                            ]),
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                        ]),
                                 ),
                               ),
                               const Text(
                                 'OR',
                                 style: const TextStyle(
                                     color: textColor,
-                                    fontSize: 36,
+                                    fontSize: 32,
                                     fontWeight: FontWeight.w500),
                               ),
                               Container(
                                   height: 100,
                                   width: double.infinity,
                                   decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black38),
                                       color: const Color.fromARGB(
                                           255, 255, 247, 233),
                                       borderRadius: BorderRadius.circular(8)),
@@ -235,7 +233,7 @@ class _MedicineScreenState extends State<MedicineScreen> {
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
                                 height: 30,
-                                width: size.width / 4,
+                                width: size.width / 3,
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: selectedIndex == index
@@ -278,7 +276,7 @@ class _MedicineScreenState extends State<MedicineScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: size.height * .2,
+                    height: size.height / 8,
                   )
                 ],
               ),
