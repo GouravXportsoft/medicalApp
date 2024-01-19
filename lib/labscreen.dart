@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class LabScreen extends StatefulWidget {     
+class LabScreen extends StatefulWidget {
   const LabScreen({super.key});
 
   @override
