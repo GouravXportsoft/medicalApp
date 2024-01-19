@@ -116,9 +116,9 @@ class _LabUploadState extends State<LabUpload> {
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: const CustomeAppBar(),
+          const CustomeAppBar(),
+          const SizedBox(
+            height: 25,
           ),
           Expanded(
             child: Stack(fit: StackFit.loose, children: [
@@ -216,9 +216,10 @@ class _LabUploadState extends State<LabUpload> {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Container(
+                      height: size.width / 3.6,
                       child: ListView.builder(
                         itemCount: gridImages.length,
                         scrollDirection: Axis.horizontal,

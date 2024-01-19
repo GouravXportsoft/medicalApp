@@ -116,9 +116,9 @@ class _MedicineScreenState extends State<MedicineScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: const CustomeAppBar(),
+          const CustomeAppBar(),
+          const SizedBox(
+            height: 25,
           ),
           Expanded(
             child: Stack(children: [
@@ -209,9 +209,10 @@ class _MedicineScreenState extends State<MedicineScreen> {
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Container(
+                      height: size.width / 3.6,
                       child: ListView.builder(
                         itemCount: gridImages.length,
                         scrollDirection: Axis.horizontal,
@@ -275,9 +276,6 @@ class _MedicineScreenState extends State<MedicineScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: size.height / 8,
-                  )
                 ],
               ),
             ]),

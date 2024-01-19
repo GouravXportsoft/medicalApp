@@ -31,9 +31,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: const CustomeAppBar(),
+          const CustomeAppBar(),
+          const SizedBox(
+            height: 25,
           ),
           Expanded(
             child: SingleChildScrollView(

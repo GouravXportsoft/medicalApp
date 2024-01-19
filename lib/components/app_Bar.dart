@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_app/constants/colors_const.dart';
 
 class CustomeAppBar extends StatelessWidget {
   const CustomeAppBar({super.key});
@@ -9,7 +10,10 @@ class CustomeAppBar extends StatelessWidget {
       child: Container(
         height: 70,
         decoration: const BoxDecoration(
-            color: Colors.transparent, boxShadow: <BoxShadow>[]),
+            color: whiteColor,
+            boxShadow: <BoxShadow>[
+              BoxShadow(blurRadius: 2, color: Colors.grey)
+            ]),
         width: double.infinity,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
