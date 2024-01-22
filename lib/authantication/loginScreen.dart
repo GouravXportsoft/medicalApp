@@ -87,12 +87,104 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             const Padding(
                               padding: EdgeInsets.only(top: 16.0),
-                              child: Text(
-                                "Welcome!",
-                                style: TextStyle(
-                                  color: blueColor,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.w700,
+                              child: InkWell(
+                                // onTap: () {
+                                //   showDialog(
+                                //       context: context,
+                                //       builder: (BuildContext context) {
+                                //         return AlertDialog(
+                                //           content: Column(
+                                //             mainAxisSize: MainAxisSize.min,
+                                //             mainAxisAlignment:
+                                //                 MainAxisAlignment.center,
+                                //             children: [
+                                //               Padding(
+                                //                 padding: const EdgeInsets.only(
+                                //                     bottom: 25),
+                                //                 child: Container(
+                                //                   height: 60,
+                                //                   width: 60,
+                                //                   decoration: BoxDecoration(
+                                //                       border: Border.all(
+                                //                           color: Colors.red),
+                                //                       borderRadius:
+                                //                           BorderRadius.circular(
+                                //                               50)),
+                                //                   child: const Icon(
+                                //                     Icons.close,
+                                //                     color: Colors.red,
+                                //                     size: 35,
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //               const Text(
+                                //                 'Oops...',
+                                //                 style: TextStyle(
+                                //                     fontWeight: FontWeight.bold,
+                                //                     color: Colors.black,
+                                //                     fontSize: 24),
+                                //               ),
+                                //               const Text(
+                                //                 'Wrong Answer!',
+                                //                 style: TextStyle(
+                                //                     fontWeight: FontWeight.w300,
+                                //                     color: Colors.black,
+                                //                     fontSize: 18),
+                                //               ),
+                                //               Padding(
+                                //                 padding:
+                                //                     const EdgeInsets.symmetric(
+                                //                         vertical: 10),
+                                //                 child: TextButton(
+                                //                   onPressed: () {
+                                //                     Navigator.of(context).pop();
+                                //                   },
+                                //                   child: Container(
+                                //                     width: 70,
+                                //                     decoration: BoxDecoration(
+                                //                         color: Color.fromARGB(
+                                //                             255, 130, 132, 223),
+                                //                         borderRadius:
+                                //                             BorderRadius
+                                //                                 .circular(7)),
+                                //                     child: const Center(
+                                //                       child: Padding(
+                                //                         padding:
+                                //                             EdgeInsets.all(5.0),
+                                //                         child: Text(
+                                //                           "OK",
+                                //                           style: TextStyle(
+                                //                               fontWeight:
+                                //                                   FontWeight
+                                //                                       .bold,
+                                //                               color:
+                                //                                   Colors.white,
+                                //                               fontSize: 20),
+                                //                         ),
+                                //                       ),
+                                //                     ),
+                                //                   ),
+                                //                 ),
+                                //               ),
+                                //               const Text(
+                                //                 'Right Answer is:',
+                                //                 style: TextStyle(
+                                //                     fontWeight: FontWeight.w300,
+                                //                     color: Colors.black,
+                                //                     fontSize: 18),
+                                //               ),
+                                //             ],
+                                //           ),
+                                //         );
+                                //       });
+                                // },
+                                child: Text(
+                                  "Welcome!",
+                                  style: TextStyle(
+                                    color: blueColor,
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
                             ),

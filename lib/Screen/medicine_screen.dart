@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:medical_app/Screen/lab_upload.dart';
 import 'package:medical_app/components/app_Bar.dart';
 import 'package:medical_app/components/bottom_container.dart';
 import 'package:medical_app/constants/colors_const.dart';
@@ -9,13 +10,67 @@ import 'package:medical_app/constants/image_const.dart';
 import 'package:medical_app/constants/string_const.dart';
 
 class MedicineScreen extends StatefulWidget {
-  MedicineScreen({super.key});
+  final int selectedIndex;
+
+  MedicineScreen({
+    super.key,
+    required this.selectedIndex,
+  });
 
   @override
-  State<MedicineScreen> createState() => _MedicineScreenState();
+  State<MedicineScreen> createState() =>
+      _MedicineScreenState(selectedIndex: this.selectedIndex);
 }
 
 class _MedicineScreenState extends State<MedicineScreen> {
+  int selectedIndex;
+
+  _MedicineScreenState({
+    required this.selectedIndex,
+  });
+
+  late ScrollController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = widget.selectedIndex;
+    controller = ScrollController(initialScrollOffset: selectedIndex * 60.0);
+  }
+  // var _selectedIndex = 0;
+
+  // final PageController pageController = PageController();
+  // _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
+
+  // getScreen() {
+  //   switch (_selectedIndex) {
+  //     case 0:
+  //       return MedicineScreen(
+  //         selectedIndex: _selectedIndex,
+  //       );
+
+  //     case 1:
+  //       return LabUpload();
+  //     case 2:
+  //       return LabUpload();
+  //     case 3:
+  //       return LabUpload();
+  //     case 4:
+  //       return LabUpload();
+  //     case 5:
+  //       return LabUpload();
+
+  //     default:
+  //       return MedicineScreen(
+  //         selectedIndex: _selectedIndex,
+  //       );
+  //   }
+  // }
+
   final List gridImages = [
     labImg,
     medicineImg,
@@ -107,7 +162,7 @@ class _MedicineScreenState extends State<MedicineScreen> {
     }
   }
 
-  int selectedIndex = 0;
+  // int selectedIndex = 0;
   List<Color> gradiantcontainerColor = [Color(0xff55BE00), Color(0xff3171DD)];
 
   @override
@@ -209,6 +264,15 @@ class _MedicineScreenState extends State<MedicineScreen> {
                       ],
                     ),
                   ),
+                  // Expanded(
+                  //   child: PageView.builder(
+                  //       physics: const NeverScrollableScrollPhysics(),
+                  //       controller: pageController,
+                  //       itemCount: _selectedIndex,
+                  //       itemBuilder: ((context, index) {
+                  //         return getScreen();
+                  //       })),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Container(
@@ -216,59 +280,48 @@ class _MedicineScreenState extends State<MedicineScreen> {
                       child: ListView.builder(
                         itemCount: gridImages.length,
                         scrollDirection: Axis.horizontal,
+                        controller: controller,
                         shrinkWrap: true,
                         physics: const AlwaysScrollableScrollPhysics(),
                         itemBuilder: ((context, index) {
-                          return InkWell(
-                            onTap: () {
-                              // Set the selected index to the tapped item
-                              setState(() {
-                                selectedIndex = index;
-                              });
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => MedicineScreen()));
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                height: 30,
-                                width: size.width / 3,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: selectedIndex == index
-                                        ? [Colors.white, Colors.white]
-                                        : gradiantcontainerColor,
-                                    end: Alignment.bottomRight,
-                                    begin: Alignment.topLeft,
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 30,
+                              width: size.width / 3,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: selectedIndex == index
+                                      ? [Colors.transparent, Colors.transparent]
+                                      : gradiantcontainerColor,
+                                  end: Alignment.bottomRight,
+                                  begin: Alignment.topLeft,
+                                ),
+                                border: Border.all(color: gridTextColor),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    gridImages[index],
+                                    scale: 3,
+                                    color: selectedIndex == index
+                                        ? Colors.green
+                                        : whiteColor,
                                   ),
-                                  border: Border.all(color: gridTextColor),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      gridImages[index],
-                                      scale: 3,
-                                      color: selectedIndex == index
-                                          ? Colors.green
-                                          : whiteColor,
-                                    ),
-                                    const SizedBox(
-                                      height: 7,
-                                    ),
-                                    Text(
-                                      gridImagesText[index],
-                                      style: TextStyle(
-                                          color: selectedIndex == index
-                                              ? Colors.green
-                                              : whiteColor,
-                                          fontWeight: FontWeight.w700),
-                                    )
-                                  ],
-                                ),
+                                  const SizedBox(
+                                    height: 7,
+                                  ),
+                                  Text(
+                                    gridImagesText[index],
+                                    style: TextStyle(
+                                        color: selectedIndex == index
+                                            ? Colors.green
+                                            : whiteColor,
+                                        fontWeight: FontWeight.w700),
+                                  )
+                                ],
                               ),
                             ),
                           );

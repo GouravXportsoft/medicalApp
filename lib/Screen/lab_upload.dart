@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -10,7 +12,14 @@ import 'package:medical_app/constants/image_const.dart';
 import 'package:medical_app/constants/string_const.dart';
 
 class LabUpload extends StatefulWidget {
-  LabUpload({super.key});
+  final selectedIndex;
+  final controller;
+
+  const LabUpload({
+    super.key,
+    this.selectedIndex,
+    this.controller,
+  });
 
   @override
   State<LabUpload> createState() => _LabUploadState();
@@ -45,10 +54,8 @@ class _LabUploadState extends State<LabUpload> {
       setState(() {
         _pickedImage = File(image.path);
       });
-      print("Image path: ${image.path}");
     } else {
       // User canceled the image picking
-      print("Image picking canceled");
     }
   }
 
@@ -60,10 +67,8 @@ class _LabUploadState extends State<LabUpload> {
       setState(() {
         _pickedImage = File(image.path);
       });
-      print("Image path: ${image.path}");
     } else {
       // User canceled the image capturing
-      print("Image capturing canceled");
     }
   }
 
@@ -100,16 +105,17 @@ class _LabUploadState extends State<LabUpload> {
 
     if (image != null) {
       // Do something with the selected/captured image
-      print("Image path: ${image.path}");
     } else {
       // User canceled the image picking/capturing
-      print("Image picking/capturing canceled");
     }
   }
 
-  List<Color> gradiantcontainerColor = [Color(0xff55BE00), Color(0xff3171DD)];
+  List<Color> gradiantcontainerColor = [
+    const Color(0xff55BE00),
+    const Color(0xff3171DD)
+  ];
   int selectedIndex = -1;
-
+  final ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -221,6 +227,7 @@ class _LabUploadState extends State<LabUpload> {
                     child: Container(
                       height: size.width / 3.6,
                       child: ListView.builder(
+                        controller: controller,
                         itemCount: gridImages.length,
                         scrollDirection: Axis.horizontal,
                         shrinkWrap: true,
@@ -232,10 +239,19 @@ class _LabUploadState extends State<LabUpload> {
                               setState(() {
                                 selectedIndex = index;
                               });
+                              controller.animateTo(
+                                index *
+                                    (size.width / 3 +
+                                        2 * 8), // Replace with your item width and padding
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                              );
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => MedicineScreen()));
+                                      builder: (context) => MedicineScreen(
+                                            selectedIndex: index,
+                                          )));
                             },
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -244,7 +260,10 @@ class _LabUploadState extends State<LabUpload> {
                                 decoration: BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: selectedIndex == index
-                                        ? [Colors.white, Colors.white]
+                                        ? [
+                                            Colors.transparent,
+                                            Colors.transparent
+                                          ]
                                         : gradiantcontainerColor,
                                     end: Alignment.bottomRight,
                                     begin: Alignment.topLeft,

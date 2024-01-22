@@ -26,6 +26,8 @@ class HomeScreen extends StatelessWidget {
     option2Text
   ];
 
+  final ScrollController controller = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +74,8 @@ class HomeScreen extends StatelessWidget {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => LabUpload()));
+                                            builder: (context) =>
+                                                const LabUpload()));
                                   },
                                   child: Container(
                                     height: 45,
