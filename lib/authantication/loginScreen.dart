@@ -31,6 +31,9 @@ class _LoginScreenState extends State<LoginScreen> {
             Positioned(
               bottom: 15,
               child: Image.asset(
+
+
+                
                 bgImg,
                 fit: BoxFit.fitWidth,
               ),

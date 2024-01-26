@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:medical_app/Screen/lab_upload.dart';
 import 'package:medical_app/components/app_Bar.dart';
 import 'package:medical_app/components/bottom_container.dart';
 import 'package:medical_app/constants/colors_const.dart';
 import 'package:medical_app/constants/image_const.dart';
 import 'package:medical_app/constants/string_const.dart';
+
 
 class MedicineScreen extends StatefulWidget {
   final int selectedIndex;
