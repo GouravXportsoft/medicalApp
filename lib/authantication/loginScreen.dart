@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:medical_app/Screen/home_screen.dart';
 import 'package:medical_app/authantication/OtpScreen.dart';
 import 'package:medical_app/authantication/RegisterationScreen.dart';
+import 'package:medical_app/constants/ApiConst.dart';
 import 'package:medical_app/constants/colors_const.dart';
 import 'package:medical_app/constants/image_const.dart';
+import 'package:medical_app/routes.dart';
+import 'package:medical_app/utilities/apiClients.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -17,6 +23,61 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
+  bool _isGmail(String email) {
+    return email.endsWith('@gmail.com') ||
+        email.endsWith('.com') ||
+        email.endsWith('.co') ||
+        email.endsWith('.in');
+  }
+
+  bool _obsecureText = true;
+  void passVisibility() {
+    setState(() {
+      _obsecureText = !_obsecureText;
+    });
+  }
+
+  validateAndSave() async {
+    final FormState form = _formKey.currentState!;
+    if (form.validate()) {
+      updateUser();
+      await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> updateUser() async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+            'http://ec2-54-159-209-201.compute-1.amazonaws.com:8080/user-api/validate'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          "userName": emailController.text,
+          "password": passController.text,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Request successful, handle the response as needed
+        print('Response: ${response.body}');
+      } else {
+        // Request failed, handle the error
+        print(
+            'Error - Status Code: ${response.statusCode}, Body: ${response.body}');
+        // You might want to show an error message to the user here
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Error: $e');
+      // You might want to show an error message to the user here
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
             Positioned(
               bottom: 15,
               child: Image.asset(
-
-
-                
                 bgImg,
                 fit: BoxFit.fitWidth,
               ),
@@ -246,13 +304,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         vertical: 12.0,
                                                         horizontal: 16.0),
                                               ),
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'Please enter your email';
+                                              validator: (authResult) {
+                                                if (authResult!.isEmpty ||
+                                                    !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                                        .hasMatch(authResult)) {
+                                                  return 'Please enter a valid email';
                                                 }
+
+                                                if (!_isGmail(authResult)) {
+                                                  return 'Please enter a valid email address';
+                                                }
+
                                                 return null;
                                               },
+                                              keyboardType:
+                                                  TextInputType.emailAddress,
                                             ),
                                           ),
                                         ),
@@ -266,7 +332,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   color: authscreenTextcolor),
                                             )),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(
+                                          padding: EdgeInsets.symmetric(
                                               vertical: 10.0),
                                           child: Container(
                                             decoration: BoxDecoration(
@@ -275,7 +341,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     BorderRadius.circular(12)),
                                             child: TextFormField(
                                               controller: passController,
-                                              decoration: const InputDecoration(
+                                              obscureText: _obsecureText,
+                                              decoration: InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText: 'password',
                                                 hintStyle: TextStyle(
@@ -283,22 +350,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     fontSize: 13,
                                                     fontWeight:
                                                         FontWeight.w400),
-                                                suffixIcon: Icon(
-                                                  Icons.lock_open,
-                                                  color: Color(0xff747474),
-                                                ),
+                                                suffixIcon: IconButton(
+                                                    onPressed: () {
+                                                      passVisibility();
+                                                    },
+                                                    icon: Icon(_obsecureText
+                                                        ? Icons.lock_outline
+                                                        : Icons.lock_open)),
                                                 contentPadding:
                                                     EdgeInsets.symmetric(
                                                         vertical: 12.0,
                                                         horizontal: 16.0),
                                               ),
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'Please enter your password';
-                                                }
-                                                return null;
-                                              },
+                                              // validator: (authResult) =>
+                                              //     authResult!.length < 8 ||
+                                              //             authResult.length > 16
+                                              //         ? 'Password should be 8-16 characters.'
+                                              //         : null,
                                             ),
                                           ),
                                         ),
@@ -309,13 +377,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     height: 20,
                                   ),
                                   GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  HomeScreen()));
-                                    },
+                                    onTap: validateAndSave,
                                     child: Container(
                                       height: 50,
                                       decoration: BoxDecoration(

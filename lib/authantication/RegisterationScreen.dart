@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:medical_app/Screen/home_screen.dart';
 import 'package:medical_app/authantication/loginScreen.dart';
+import 'package:medical_app/constants/ApiConst.dart';
 import 'package:medical_app/constants/colors_const.dart';
 import 'package:medical_app/constants/image_const.dart';
+import 'package:medical_app/utilities/apiClients.dart';
+
+import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -15,6 +22,68 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
+  final TextEditingController userName = TextEditingController();
+  final TextEditingController DOBcontroller = TextEditingController();
+  final TextEditingController pinController = TextEditingController();
+  final TextEditingController firstName = TextEditingController();
+  final TextEditingController LastName = TextEditingController();
+  final TextEditingController phoneController = TextEditingController();
+
+  bool _isGmail(String email) {
+    return email.endsWith('@gmail.com') ||
+        email.endsWith('.com') ||
+        email.endsWith('.co') ||
+        email.endsWith('.in');
+  }
+
+  validateAndSave() async {
+    final FormState form = _formKey.currentState!;
+    if (form.validate()) {
+      AddUser();
+      await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  AddUser() async {
+    try {
+      final response = await http.post(
+        Uri.parse(
+            "http://ec2-54-159-209-201.compute-1.amazonaws.com:8080/user-api/add"),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode({
+          "password": passController.text,
+          "firstName": firstName.text,
+          "lastName": LastName.text,
+          "email": emailController.text,
+          "yearOfBirth": DOBcontroller.text,
+          "pin": pinController.text,
+          "mobileNumber": phoneController.text,
+          "profileAvatar": "string",
+          "type": "string",
+          "userName": userName.text,
+          "creationDate": "2024-01-29T08:57:00.445Z"
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Request successful, handle the response as needed
+        print('Response: ${response.body}');
+      } else {
+        // Request failed, handle the error
+        print(
+            'Error - Status Code: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (e) {
+      // Handle exceptions
+      print('Error: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Container(
                       height: 110,
                       width: size.width * .28,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           boxShadow: [
                             BoxShadow(color: Colors.black38, blurRadius: 2)
                           ],
@@ -73,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           //   filterQuality: FilterQuality.high,
                           //   fit: BoxFit.fitWidth,
                           // ),
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             topRight: Radius.circular(35),
                             topLeft: Radius.circular(35),
                           ),
@@ -112,6 +181,104 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
+                                                "First Name",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: authscreenTextcolor),
+                                              )),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 10.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(12)),
+                                            child: TextFormField(
+                                              controller: firstName,
+                                              decoration: const InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                hintText: 'First Name',
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xff747474),
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                suffixIcon: Icon(
+                                                  Icons.person_outline,
+                                                  color: Color(0xff747474),
+                                                ),
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        vertical: 12.0,
+                                                        horizontal: 16.0),
+                                              ),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Please enter your name';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.only(left: 16),
+                                          child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "Last Name",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: authscreenTextcolor),
+                                              )),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 10.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(12)),
+                                            child: TextFormField(
+                                              controller: LastName,
+                                              decoration: const InputDecoration(
+                                                border: OutlineInputBorder(),
+                                                hintText: 'Last Name',
+                                                hintStyle: TextStyle(
+                                                    color: Color(0xff747474),
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                                suffixIcon: Icon(
+                                                  Icons.person_outline,
+                                                  color: Color(0xff747474),
+                                                ),
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        vertical: 12.0,
+                                                        horizontal: 16.0),
+                                              ),
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Please enter your last name';
+                                                }
+                                                return null;
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.only(left: 16),
+                                          child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
                                                 "Username",
                                                 style: TextStyle(
                                                     fontSize: 15,
@@ -128,7 +295,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(12)),
                                             child: TextFormField(
-                                              controller: emailController,
+                                              controller: userName,
                                               decoration: const InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText: 'Select Username',
@@ -149,7 +316,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
-                                                  return 'Please enter your email';
+                                                  return 'Please enter your valid username';
                                                 }
                                                 return null;
                                               },
@@ -226,7 +393,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(12)),
                                             child: TextFormField(
-                                              controller: passController,
+                                              controller: emailController,
                                               decoration: const InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText: 'Your email id...',
@@ -244,11 +411,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                         vertical: 12.0,
                                                         horizontal: 16.0),
                                               ),
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'Please enter your password';
+                                              validator: (authResult) {
+                                                if (authResult!.isEmpty ||
+                                                    !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                                        .hasMatch(authResult)) {
+                                                  return 'Please enter a valid email';
                                                 }
+
+                                                if (!_isGmail(authResult)) {
+                                                  return 'Please enter a valid email address';
+                                                }
+
                                                 return null;
                                               },
                                             ),
@@ -275,7 +448,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(12)),
                                             child: TextFormField(
-                                              controller: passController,
+                                              controller: phoneController,
                                               decoration: const InputDecoration(
                                                 border: OutlineInputBorder(),
                                                 hintText: 'Enter Mobile Number',
@@ -296,7 +469,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
-                                                  return 'Please enter your password';
+                                                  return 'Please enter your phone number';
                                                 }
                                                 return null;
                                               },
@@ -308,7 +481,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           child: Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
-                                                "Name",
+                                                "Pin",
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w500,
@@ -324,17 +497,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(12)),
                                             child: TextFormField(
-                                              controller: passController,
+                                              controller: pinController,
                                               decoration: const InputDecoration(
                                                 border: OutlineInputBorder(),
-                                                hintText: 'Eenter Your Name',
+                                                hintText: 'Enter your Pin',
                                                 hintStyle: TextStyle(
                                                     color: Color(0xff747474),
                                                     fontSize: 13,
                                                     fontWeight:
                                                         FontWeight.w400),
                                                 suffixIcon: Icon(
-                                                  Icons.person_outline,
+                                                  Icons.pin,
                                                   color: Color(0xff747474),
                                                 ),
                                                 contentPadding:
@@ -345,7 +518,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
-                                                  return 'Please enter your password';
+                                                  return 'Please enter your pin';
                                                 }
                                                 return null;
                                               },
@@ -394,7 +567,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
-                                                  return 'Please enter your password';
+                                                  return 'Please enter your DOB';
                                                 }
                                                 return null;
                                               },
@@ -405,7 +578,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () {},
+                                    onTap: validateAndSave,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0, vertical: 20.0),
@@ -436,13 +609,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ],
                               ),
                               GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginScreen()));
-                                  },
+                                  onTap: () {},
                                   child: RichText(
                                       text: const TextSpan(children: [
                                     TextSpan(
